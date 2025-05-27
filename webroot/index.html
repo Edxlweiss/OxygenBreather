@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OxygenBreather Web UI</title>
+    <style>
+        /* General Body & Pulsing Background Styling */
+        html, body {
+            height: 100%;
+            margin: 0;
+            background-color: #181818; /* Starting dark color */
+            animation: pulseBG 10s ease-in-out infinite alternate; /* Pulse animation */
+            
+            color: #e0e0e0;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        @keyframes pulseBG {
+            0% { background-color: #181818; } /* Starting dark grey */
+            50% { background-color: #301040; } /* More distinct deep purple */
+            100% { background-color: #181818; } /* Back to start */
+        }
+
+        /* Keyframes for button glowing shadow */
+        @keyframes buttonGlowPulse {
+            0% { box-shadow: 0 0 10px rgba(0, 0, 0, 0.4); } /* Subtle dark shadow */
+            50% { box-shadow: 0 0 25px 5px rgba(125, 18, 255, 0.7); } /* Brighter, wider purple glow */
+            100% { box-shadow: 0 0 10px rgba(0, 0, 0, 0.4); } /* Back to subtle dark shadow */
+        }
+
+        /* --- Header Styling --- */
+        #top-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            padding: 15px 0;
+            z-index: 2;
+        }
+
+        #top-header img {
+            max-width: 200px;
+            height: auto;
+            filter: drop-shadow(0 0 5px rgba(0,0,0,0.4));
+        }
+
+        /* --- Main Content Wrapper & Controls Area --- */
+        #main-content-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Container for all controls */
+        .controls-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+            width: 90%;
+            max-width: 600px;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: row;
+            gap: 25px;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+        }
+
+        button {
+            flex-grow: 1;
+            min-width: 140px;
+            max-width: 250px;
+            padding: 18px 35px;
+            font-size: 1.2em;
+            background-color: #7d12ff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            /* Apply the new glowing shadow animation */
+            animation: buttonGlowPulse 10s ease-in-out infinite alternate; 
+        }
+
+        button:hover {
+            background-color: #019875;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            background-color: #007a5d;
+            transform: translateY(0);
+        }
+
+        /* --- Footer Text Styling --- */
+        #footer-text {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            font-size: 0.9em;
+            color: rgba(255, 255, 255, 0.6);
+            z-index: 3;
+            white-space: nowrap;
+        }
+
+        #footer-text a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        #footer-text a:hover {
+            color: white;
+        }
+
+        /* --- Responsive adjustments --- */
+        @media (max-width: 600px) {
+            html, body {
+                padding: 10px;
+            }
+            #top-header {
+                padding: 10px 0;
+            }
+            #top-header img {
+                max-width: 150px;
+            }
+
+            .controls-area {
+                gap: 15px;
+            }
+
+            .button-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            button {
+                width: 100%;
+                max-width: none;
+                font-size: 1.1em;
+                padding: 15px 25px;
+            }
+
+            #footer-text {
+                font-size: 0.8em;
+                bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="top-header">
+        <img id="header-logo" src="assets/header.png" alt="OxygenBreather Logo">
+    </div>
+
+    <div id="main-content-wrapper">
+        <div class="controls-area">
+            <div class="button-container">
+                <button onclick="window.location.href='https://github.com/Edxlweiss'">GitHub</button>
+                <button onclick="window.location.href='https://trakteer.id/Edxlweiss/tip'">Support</button>
+                <button onclick="window.location.href='mailto:edxlweissfeed@gmail.com?subject=Feedback%20for%20OxygenBreather'">Send Feedback</button>
+                <button onclick="window.location.href='https://github.com/Edxlweiss/OxygenBreather/releases'">Check for Updates</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-text">
+        <a href="https://t.me/edxlweissbunker" target="_blank">Copyright (c) 2025, Edxlweiss</a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let ksuCheckCount = 0;
+            const maxKsuChecks = 5;
+
+            function checkKsuStatus() {
+                if (typeof ksu !== 'undefined' && typeof ksu.exec === 'function') {
+                    console.log('KSU object and ksu.exec are available.');
+                } else {
+                    ksuCheckCount++;
+                    if (ksuCheckCount < maxKsuChecks) {
+                        console.warn(`KSU object NOT found or ksu.exec is missing (attempt ${ksuCheckCount}).`);
+                        setTimeout(checkKsuStatus, 200);
+                    } else {
+                        console.error('KSU object was not detected after multiple attempts. Root commands will not work.');
+                    L
+                    }
+                }
+            }
+            checkKsuStatus();
+        });
+    </script>
+
+</body>
+</html>
