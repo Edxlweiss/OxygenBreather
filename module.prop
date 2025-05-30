@@ -1,7 +1,7 @@
 id=oxygenbreather
 name=Oxygen Breather
-version=1.1 (747-26wb-release)
-versionCode=101
+version=1.2
+versionCode=102
 author=Edxlweiss
 description=Dynamic battery saving
 supportAction=true
